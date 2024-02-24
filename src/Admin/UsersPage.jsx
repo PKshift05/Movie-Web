@@ -12,12 +12,10 @@ const UsersPage = () => {
     const getAll = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:5000/users/pagination?page=${currentPage}&page_size=10`);
-        const userData = response.data;
+        const responseData = response.data;
 
-        setUsers(userData);
-        // Update the total pages based on the response headers
-        const totalPages = response.headers['x-total-pages'];
-        setTotalPages(totalPages || 1);
+        setUsers(responseData.users);
+        setTotalPages(responseData.total_pages);
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
@@ -33,7 +31,9 @@ const UsersPage = () => {
         : [...prevSelectedUsers, userId]
     );
   };
-
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
   const handleDeleteSelected = async () => {
     try {
       await Promise.all(selectedUsers.map(async (userId) => {
@@ -51,9 +51,7 @@ const UsersPage = () => {
     }
   };
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
+ 
 
   return (
     <div>

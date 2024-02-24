@@ -57,8 +57,9 @@ const MoviesPage = () => {
 
       setErrorMessage('Thêm thành công')
       setBoxSuccess(true)
-
+      
       setIsModalOpen(false);
+      getAll();
     } catch (error) {
       console.error('Error creating movie:', error);
       setBoxSuccess(true)
